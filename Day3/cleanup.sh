@@ -17,10 +17,6 @@ remove_comments () {
 	fi
 }
 
-remove_trailing_whitespaces () {
-	echo ok
-}
-
 help () {
         echo -e "Usage: cleanup.sh [OPTION] INPUT FROM STDIN\n"
         echo -e "-d DELIM\tspecify custom delimeter"
@@ -28,36 +24,18 @@ help () {
         echo -e "-h\t\tprint help"
 }
 
-for arg in "$@"; do
- case "$arg" in
-        -W)
-        EMPTY_LINES=false
-        shift;
-        ;;
-
-        -d)
-        if [[ -z "$2" ]];then
-                echo "Custom delimeter option is choosen but not specified!\n"
-		help
-                exit 1
-        fi
-	CUSTOM_DELIMETER=true
-        DELIMETER=$2;
-        shift;
-        shift;
-        ;;
-
-        -h)
-        help;
-        exit 0;
-        ;;
-
-        *)
-        ;;
- esac
+while getopts "Wd:h" opt
+do
+	case $opt in
+		W) EMPTY_LINES=false;;
+		d) CUSTOM_DELIMETER=true
+		DELIMETER="$OPTARG";;
+		h) help && exit 0;;
+		?) help && exit 1;;
+	esac
 done
 
-IFS=''
+IFS='' # get back my leading whitespaces and tabs
 while read line
 do
  if $EMPTY_LINES;then
