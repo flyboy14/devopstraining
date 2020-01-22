@@ -4,7 +4,24 @@ EMPTY_LINES=true
 CUSTOM_DELIMETER=false
 DELIMETER="#"
 
-help() {
+
+remove_empty_lines () {
+	sed '/^\s*$/d'
+}
+
+remove_comments () {
+	if $CUSTOM_DELIMETER; then
+		sed "/^$DELIMETER/d" 
+	else
+		sed -e "/^$DELIMETER/d" -e "s@[[:blank:]]\\$DELIMETER.*@@"
+	fi
+}
+
+remove_trailing_whitespaces () {
+	echo ok
+}
+
+help () {
         echo -e "Usage: cleanup.sh [OPTION] INPUT FROM STDIN\n"
         echo -e "-d DELIM\tspecify custom delimeter"
         echo -e "-W\t\tdo NOT strip empty lines"
@@ -40,20 +57,13 @@ for arg in "$@"; do
  esac
 done
 
+IFS=''
 while read line
 do
  if $EMPTY_LINES;then
-	if $CUSTOM_DELIMETER;then 
-		echo "$line" | sed "/^$DELIMETER/d" | sed -r '/^ ?$/d'
-	else
-		echo "$line" | sed -E 's@[[:blank:]]*#.*@@;T;/./!d' | sed -r '/^ ?$/d'
-	fi
+ 	echo "${line%%*( )}" | remove_empty_lines | remove_comments 
  else
-	if $CUSTOM_DELIMETER;then
-		echo "$line" | sed "/^$DELIMETER/d"
-	else
-		echo "$line" | sed -E 's@[[:blank:]]*#.*@@;T;/./!d'
-	fi
+ 	echo "${line%%*( )}" | remove_comments 
  fi
 done
 
