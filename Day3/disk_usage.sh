@@ -2,11 +2,17 @@
 
 NUM=10
 help() {
-	echo -e "Usage: disk_usage.sh [OPTION] [DIRECTORY]\n"
+	echo -e "\nUsage: disk_usage.sh [OPTION] [DIRECTORY]\n"
 	echo -e "-a\tlist both files and dirs"
 	echo -e "-n NUM\tspecify number of entries to print"
 	echo -e "-h\tprint help"
 }
+
+if [[ -z "$@" ]]; then 
+	echo -e "$0: directory not specified"
+	help
+	exit 1
+fi
 
 while getopts "an:h" opt
 do
@@ -20,7 +26,7 @@ done
 
 FLD="${!#}"
 if [[ ! -d $FLD ]]; then
-	echo -e "ERROR! Valid directory is required\n"
+	echo -e "$0: no such directory \"$FLD\""
 	help
 	exit 1
 fi
