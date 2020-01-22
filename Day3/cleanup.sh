@@ -28,8 +28,7 @@ while getopts "Wd:h" opt
 do
 	case $opt in
 		W) EMPTY_LINES=false;;
-		d) CUSTOM_DELIMETER=true
-		DELIMETER="$OPTARG";;
+		d) CUSTOM_DELIMETER=true; DELIMETER="$OPTARG";;
 		h) help && exit 0;;
 		?) help && exit 1;;
 	esac
