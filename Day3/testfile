@@ -1,8 +1,8 @@
-not comment
+# Super useful comment describing a tricky configuration option
 
-# comment
+SETUP_THE_BOMB="no" # Hide the evidence
 
-this is # inline comment
+# Another super userful comment
 
-  some stuff with whitespace
-	tabulation stuff
+BASE_OWNERSHIP="us" # All your base belongs to...
+
