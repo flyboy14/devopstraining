@@ -12,7 +12,6 @@ if [[ ! -d $FLD ]]; then
 	exit 1
 fi
 
-cd $FLD
 echo "Siarhei_Kazak" > student
 echo "Created file student"
 
@@ -46,13 +45,12 @@ tar -uf mytest.tar 30/test3
 gzip mytest.tar
 echo "Updated mytest.tar.gz with test3 file"
 
-cd $FLD
-mkdir -p $FLDN/mytest
+mkdir -p mytest
 echo "Created dir $FLDN/mytest"
 
-mv $FLDN/mytest.tar.gz $FLDN/mytest/
+mv mytest.tar.gz ./mytest/
 echo "Moved mytest.tar.gz to $FLDN/mytest/"
-tar -xzf $FLDN/mytest/mytest.tar.gz -C $FLDN/mytest/
+tar -xzf ./mytest/mytest.tar.gz -C ./mytest/
 echo "Extracted mytest.tar.gz in place"
 
 echo "Done!"
