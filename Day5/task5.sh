@@ -47,3 +47,6 @@ sudo -u user2 sudo cp /home/user1/whoami.sh /home/user3/whoami.sh
 sudo setfacl -R -m user:user2:rx ~user3
 
 sudo -u user2 bash /home/user3/whoami.sh 
+
+sudo setenforce Permissive
+echo "Selinux is now $(getenforce)!" 
