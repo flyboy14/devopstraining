@@ -36,13 +36,13 @@ echo "Added needed users to odd and even groups"
 echo "" > /tmp/user.info
 for i in {1..20}
 do
-	echo "$(cat /etc/passwd | grep user$i | head -n1 | awk -F ":" "{print \$1,\$6 }") $(last | grep user$i |head -n1| sed "s/  */@/g" |awk -F "@" '{print $4,$5,$6,$7,$8,$9,$10}')" >> /tmp/user.info
+	echo "$(cat /etc/passwd | grep user$i | head -n1 | awk -F ":" "{print \$1,\$6 }") $(last | grep "user$i " |head -n1| xargs |awk '{print $4,$5,$6,$7,$8,$9,$10}')" >> /tmp/user.info
 done 
 echo "Copied 20 user's info to /tmp/user.info"
 
 sudo bash -c "echo -e \"#!/bin/bash\n\nwhoami\" > /home/user1/whoami.sh"
 sudo chmod +x /home/user1/whoami.sh
-echo "Created /home/user1/shoami.sh"
+echo "Created /home/user1/whoami.sh"
 
 # Grant permissions to sudo
 sudo usermod -aG wheel user2
