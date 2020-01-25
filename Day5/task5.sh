@@ -11,9 +11,8 @@ echo "Added super_user user"
 for i in {1..20}
 do
 	sudo -u super_user sudo groupadd -g "$(( 7000+10*$i+$i+$i/10 ))" user$i
-	sudo -u super_user sudo useradd -p -U -u "$(( 9000+10*$i+$i+$i/10 ))" -g "$(( 7000+10*$i+$i+$i/10 ))" -s /bin/sh -m user$i -c "Sample user with password and homedir"
+	sudo -u super_user sudo useradd -p -U -u "$(( 9000+10*$i+$i+$i/10 ))" -g user$i -s /bin/sh -m user$i -c "Sample user with password and homedir"
 
-	sudo usermod -aG user$i user$i
 	echo 2222 | sudo passwd --stdin "user$i" > /dev/null
 done
 echo "Created 20 users and changed their passwords to 2222"
@@ -37,7 +36,7 @@ echo "Added needed users to odd and even groups"
 echo "" > /tmp/user.info
 for i in {1..20}
 do
-	echo "$(cat /etc/passwd | grep user$i | head -n 1 | awk -F ":" "{print \$1,\$6 }") $(last | grep super_ | sed "s/  */@/g" |awk -F "@" '{print $6}')" >> /tmp/user.info
+	echo "$(cat /etc/passwd | grep user$i | head -n1 | awk -F ":" "{print \$1,\$6 }") $(last | grep user$i |head -n1| sed "s/  */@/g" |awk -F "@" '{print $4,$5,$6,$7,$8,$9,$10}')" >> /tmp/user.info
 done 
 echo "Copied 20 user's info to /tmp/user.info"
 
