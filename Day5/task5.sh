@@ -42,7 +42,7 @@ echo "Copied 20 user's info to /tmp/user.info"
 
 sudo bash -c "echo -e \"#!/bin/bash\n\nwhoami\" > /home/user1/whoami.sh"
 sudo chmod +x /home/user1/whoami.sh
-echo "Created /home/user1/shoami.sh"
+echo "Created /home/user1/whoami.sh"
 
 # Grant permissions to sudo
 sudo usermod -aG wheel user2
