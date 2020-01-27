@@ -2,10 +2,10 @@
 
 #sudo useradd -o -u 0 -g 0 -N -M super_user
 
-sudo useradd -g wheel super_user
+sudo useradd -g root super_user
 
 sudo cat /etc/sudoers > sudoers.save
-sudo bash -c "cat sudoers.save | grep NOPASS | sed \"s/# %wheel/%wheel/\" >> /etc/sudoers"
+sudo bash -c 'echo super_user ALL=(ALL) NOPASSWD:ALL >> /etc/sudoers'
 echo "Added super_user user"
 
 for i in {1..20}
@@ -46,9 +46,13 @@ echo "Created /home/user1/whoami.sh"
 
 # Grant permissions to sudo
 sudo usermod -aG wheel user2
+sudo bash -c 'echo "user2 "ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers'
 
 sudo -u user2 sudo cp /home/user1/whoami.sh /home/user3/
 echo "Copied /home/user1/whoami.sh to /home/user3/"
+
+# Remove permissions to sudo
+sudo bash -c 'sed -i "s/user2 "ALL=(ALL) NOPASSWD: ALL//g" /etc/sudoers'
 
 # Grant permissions to user3 home folder
 sudo setfacl -R -m user:user2:rx ~user3
