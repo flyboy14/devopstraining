@@ -9,6 +9,7 @@ echo "gathering information on vm2"
 ssh vm2 'echo $(sudo ip a | grep enp| grep inet | awk "{print \$2}") is an address for $(hostname) >> info &&\
 scp -P 24 info vm3:/home/centos/info &&\
 rm info' 2>/dev/null
+
 echo "gathering information on vm3"
 ssh vm3 'echo -e $(ip a | grep enp| grep inet | awk "{print \$2}") \
 is an address for $(hostname) >> /home/centos/info &&\
@@ -21,7 +22,9 @@ echo "copied gathered information to vm3:/root/info"
 
 echo "creating a file on vm1"
 echo "THIS IS A FILE" > file
+
 echo "copying file to vm3:/root/file"
 scp -q file vm3:/root/ 2>/dev/null
 rm file
+
 echo "done!"
