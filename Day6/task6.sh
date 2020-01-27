@@ -1,12 +1,12 @@
 #!/bin/bash
 
-ssh vm2 "sudo sed -i \"s/#Port 22/Port 23/g\" /etc/ssh/sshd_config &&\
+ssh vm2 "sudo sed -i 's/#Port 22/Port 23/g' /etc/ssh/sshd_config &&\
 sudo iptables -I INPUT -p tcp --dport 23 -j ACCEPT &&\
 sudo setenforce 0 &&\
 sudo systemctl restart sshd"
 ssh vm3 "sudo yum install -y net-tools bind-utils &&\
-sudo sed -i \"s/#Port 22/Port 24/g\" /etc/ssh/sshd_config &&\
-sudo bash -c \"echo PermitRootLogin yes >> /etc/ssh/sshd_config\" &&\
+sudo sed -i 's/#Port 22/Port 24/g' /etc/ssh/sshd_config &&\
+sudo bash -c 'echo PermitRootLogin yes >> /etc/ssh/sshd_config' &&\
 sudo iptables -I INPUT -p tcp --dport 24 -j ACCEPT &&\
 sudo setenforce 0 &&\
 sudo systemctl restart sshd"

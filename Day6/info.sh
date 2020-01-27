@@ -1,11 +1,9 @@
 #!/bin/bash
 
-echo $(ip a | grep enp| grep inet | awk '{print $2}') \
-is an address for $(hostname) > info
+echo $(ip a | grep enp | grep inet | awk '{print $2}') is an address for $(hostname) > info
 scp info vm2:/home/centos/
 rm info
-ssh vm2 'echo $(sudo ip a | grep enp| grep inet | awk "{print \$2}") \
-is an address for $(hostname) >> info &&\
+ssh vm2 'echo $(sudo ip a | grep enp| grep inet | awk "{print \$2}") is an address for $(hostname) >> info &&\
 scp -P 24 info vm3:/home/centos/info &&\
 rm info'
 ssh vm3 'echo -e $(ip a | grep enp| grep inet | awk "{print \$2}") \
