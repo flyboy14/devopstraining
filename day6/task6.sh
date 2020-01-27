@@ -14,7 +14,9 @@ sudo setenforce 0 &&\
 sudo systemctl restart sshd" 2>/dev/null
 echo "vm3 is now configured to listen sshd on port 24 and root login is permitted"
 
-ssh -p 24 vm3 "sudo iptables -I INPUT -s vm1 -p tcp --dport 24 -j REJECT&& sudo cp -a /home/centos/.ssh /root/ && sudo chown -R root /root/.ssh" 2>/dev/null
+ssh -p 24 vm3 "sudo iptables -I INPUT -s vm1 -p tcp --dport 24 -j REJECT && \
+sudo cp -a /home/centos/.ssh /root/ && \
+sudo chown -R root /root/.ssh" 2>/dev/null
 echo "direct connection to vm3 on port 24 is now forbidden"
 
 echo -e "Host vm2\n\tHostName vm2\n\tUser centos\n\tPort 23\n" > /home/centos/.ssh/config
