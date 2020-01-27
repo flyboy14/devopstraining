@@ -4,12 +4,11 @@
 # 	- /etc/hosts : binded ips as vm1, vm2, vm3
 #	- user centos w/o password prompting on sudo
 #	- public id_rsa imported on centos@vm2, centos@vm3
-# 	- public id_rsa imported on root@vm3
 #
 # vm2
 # 	- /etc/hosts : binded ips as vm1, vm2, vm3
 #	- user centos w/o password prompting on sudo
-#	- public id_rsa imported on vm3
+#	- public id_rsa imported on centos@vm3
 #
 # vm3
 # 	- /etc/hosts : binded ips as vm1, vm2, vm3
