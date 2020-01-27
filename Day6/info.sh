@@ -11,10 +11,8 @@ is an address for $(hostname) >> /home/centos/info &&\
 echo -e PORT 68 IS FOR: \
 $(sudo netstat -tulpan | grep 68 | xargs | awk -F"/" "{print \$2}") >> /home/centos/info &&\
 echo -e NAMESERVERS:"" >> /home/centos/info &&\
-echo $(dig epam.com any | grep NS | grep epam | sed "s/\s\s*/ /g" | awk "{print \$5}") > /home/centos/123'  
-ssh vm3 'cat /home/centos/123 | sed "s/ /\n/g" >> /home/centos/info &&\
-mv /home/centos/info /root/info &&\
-rm /home/centos/123'
+echo $(dig epam.com any | grep NS | grep epam | sed "s/\s\s*/ /g" | awk "{print \$5}" >> /home/centos/info &&\
+mv /home/centos/info /root/)'  
 echo "THIS IS A FILE" > file
 scp file vm3:/root/
 rm file
