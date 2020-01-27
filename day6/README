@@ -1,16 +1,18 @@
 # Preconfigured VMs Info:
 #
 # vm1
-# 	- /etc/hosts : binded ips as vm1, vm2, vm3
+# 	- /etc/hosts : binded vm IPs as vm1, vm2, vm3
+#	- /etc/hosts.deny : denied ssh connections from vm2, vm3
 #	- user centos w/o password prompting on sudo
 #	- public id_rsa imported on centos@vm2, centos@vm3
 #
 # vm2
-# 	- /etc/hosts : binded ips as vm1, vm2, vm3
+# 	- /etc/hosts : binded vm IPs as vm1, vm2, vm3
+#	- /etc/hosts.deny : denied ssh connections from vm3
 #	- user centos w/o password prompting on sudo
 #	- public id_rsa imported on centos@vm3
 #
 # vm3
-# 	- /etc/hosts : binded ips as vm1, vm2, vm3
+# 	- /etc/hosts : binded vm IPs as vm1, vm2, vm3
 #	- user centos w/o password prompting on sudo
 #
