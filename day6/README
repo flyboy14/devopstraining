@@ -10,7 +10,7 @@
 # 	- /etc/hosts : binded vm IPs as vm1, vm2, vm3
 #	- /etc/hosts.deny : denied ssh connections from vm3
 #	- user centos w/o password prompting on sudo
-#	- public id_rsa exmported to centos@vm3
+#	- public id_rsa exported to centos@vm3
 #
 # vm3
 # 	- /etc/hosts : binded vm IPs as vm1, vm2, vm3
