@@ -1,5 +1,9 @@
 #!/bin/bash
 
+
+# In the big city whatever can happen to a tiny student file
+echo "Siarhei Kazak" > /home/student/centos/student
+
 #sudo useradd -o -u 0 -g 0 -N -M super_user
 
 sudo useradd -g root super_user
