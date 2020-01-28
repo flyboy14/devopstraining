@@ -23,17 +23,17 @@ sudo -u mongo tar -xzf /tmp/mongodb-linux-x86_64-3.6.5.tgz -C /tmp/
 sudo -u mongo tar -xzf /tmp/mongodb-src-r3.6.5.tar.gz -C /tmp/
 
 sudo -u mongo cp -a /tmp/mongodb-linux-x86_64-3.6.5/* /apps/mongo/
-export PATH=/apps/mongo/bin:$PATH
-echo 'export PATH=/apps/mongo/bin:$PATH' >> ~/.bash_profile
-echo 'export PATH=/apps/mongo/bin:$PATH' >> ~/.bashrc
+su - mongo -c "export PATH=/apps/mongo/bin:$PATH"
+su - mongo -c 'echo PATH=/apps/mongo/bin:$PATH >> ~/.bash_profile'
+su - mongo -c 'echo PATH=/apps/mongo/bin:$PATH >> ~/.bashrc'
 
 echo '@mongo soft nproc 32000' >> /etc/security/limits.conf
 echo '@mongo hard nproc 32000' >> /etc/security/limits.conf
 
-echo -e 'Cmnd_Alias SKAZAK_CMDS = /apps/mongo/bin/mongod\nSiarhei_Kazak ALL=(ALL) NOPASSWD: SKAZAK_CMDS' >> /etc/sudoers
+echo -e 'Cmnd_Alias SKAZAK_CMDS = /apps/mongo/bin/mongod\nSiarhei_Kazak ALL=(mongo) NOPASSWD: SKAZAK_CMDS' >> /etc/sudoers
 
 if [[ ! $(getenforce) == "Permissive" ]];then 
-	setenforce 0
+	sed -i 's@enforcing@disabled@' /etc/selinux/config
 fi
 
 #sudo -u Siarhei_Kazak sudo -H -u mongo /apps/mongo/bin/mongod --dbpath /apps/mongodb
@@ -42,8 +42,6 @@ cp -f /tmp/mongodb-src-r3.6.5/rpm/mongod.conf /apps/mongo/
 
 sed -i "s_/var/log/mongodb_/logs/mongo_g" /apps/mongo/mongod.conf 
 sed -i "s_/var/lib/mongo_/apps/mongodb_g" /apps/mongo/mongod.conf
-
-cp /tmp/mongodb-src-r3.6.5/rpm/mongod.service /etc/systemd/system/
 
 echo -e "[Unit]
 After=network.target\n
@@ -54,14 +52,18 @@ Environment=\"OPTIONS=-f /apps/mongo/mongod.conf\"
 ExecStart=/apps/mongo/bin/mongod \$OPTIONS
 ExecStartPre=/usr/bin/mkdir -p /var/run/mongodb
 ExecStartPre=/usr/bin/chown mongo:staff /var/run/mongodb
-ExecStartPre=/usr/bin/chmod 0755 /var/run/mongodb
+ExecStartPre=/bin/test -f /apps/mongo/bin/mongod
+ExecStartPre=/bin/test -d /apps/mongodb/
+ExecStartPre=/bin/test -d /logs/mongo
+ExecStartPre=/bin/test -z "$(pgrep mongod)"
 PermissionsStartOnly=true
 PIDFile=/var/run/mongodb/mongod.pid
 Type=simple\n
 [Install]
 WantedBy=multi-user.target" > /etc/systemd/system/mongod.service
 
-chown -R mongo:staff /logs && chmod -R 750 /logs
+chown -R mongo:staff /logs 
+chmod -R 740 /logs
 sed -i "s_fork: true_fork: false_g" /apps/mongo/mongod.conf
 
 systemctl start mongod
