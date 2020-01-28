@@ -18,15 +18,15 @@ chmod -R 640 /logs/mongo
 yum install -y -q wget curl net-tools > /dev/null
 
 echo "9. Downloading mongo tarball via wget..."
-#sudo -u mongo wget -P /tmp https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-3.6.5.tgz
+sudo -u mongo wget -P /tmp https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-3.6.5.tgz
 echo -e "ok\n"
 echo "10. Downloading mongo sources via curl..."
-#sudo -u mongo curl -o /tmp/mongodb-src-r3.6.5.tar.gz https://fastdl.mongodb.org/src/mongodb-src-r3.6.5.tar.gz
+sudo -u mongo curl -o /tmp/mongodb-src-r3.6.5.tar.gz https://fastdl.mongodb.org/src/mongodb-src-r3.6.5.tar.gz
 echo -e "ok\n"
 
 echo "11-20. Executing silently..."
-#sudo -u mongo tar -xzf /tmp/mongodb-linux-x86_64-3.6.5.tgz -C /tmp/
-#sudo -u mongo tar -xzf /tmp/mongodb-src-r3.6.5.tar.gz -C /tmp/
+sudo -u mongo tar -xzf /tmp/mongodb-linux-x86_64-3.6.5.tgz -C /tmp/
+sudo -u mongo tar -xzf /tmp/mongodb-src-r3.6.5.tar.gz -C /tmp/
 
 sudo -u mongo cp -a /tmp/mongodb-linux-x86_64-3.6.5/* /apps/mongo/
 
@@ -81,8 +81,8 @@ WantedBy=multi-user.target" > /etc/systemd/system/mongod.service
 
 sed -i "s_fork: true_fork: false_g" /apps/mongo/mongod.conf
 
+#systemctl daemon-reload
 systemctl start mongod
 systemctl -q enable mongod
-#systemctl daemon-reload
 
 echo "Done!"
