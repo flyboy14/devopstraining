@@ -63,3 +63,6 @@ WantedBy=multi-user.target" > /etc/systemd/system/mongod.service
 
 chown -R mongo:staff /logs && chmod -R 750 /logs
 sed -i "s_fork: true_fork: false_g" /apps/mongo/mongod.conf
+
+systemctl start mongod
+systemctl enable mongod
