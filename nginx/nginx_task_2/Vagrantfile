@@ -1,0 +1,28 @@
+Vagrant.configure("2") do |config|
+#
+# creating and configuring VM for nginx
+#
+  (1..2).each do |i|
+    config.vm.define "web#{i}" do |web|
+      web.vm.box = "sbeliakou/centos"
+      web.vm.hostname = "kazak-nginx#{i}"
+      web.vm.network "private_network", ip: "192.168.56.2#{i+2}"
+      web.vm.provider "virtualbox" do |vb|
+        vb.memory = "1024"
+      end
+      web.vm.provision "shell", path: "provision.sh", privileged: false
+    end
+  end
+
+  config.vm.define "balancer" do |bal|
+    bal.vm.box = "sbeliakou/centos"
+    bal.vm.hostname = "kazak-balancer"
+    bal.vm.network "private_network", ip: "192.168.56.22"
+    bal.vm.provider "virtualbox" do |vb|
+      vb.memory = "2048"
+    end
+    bal.vm.provision "shell", path: "provision_balancer.sh", privileged: false
+  end
+
+
+end

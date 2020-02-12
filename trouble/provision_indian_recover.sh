@@ -84,8 +84,8 @@ sudo iptables -F
 sudo iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
 sudo iptables -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
 sudo iptables -A INPUT -i lo -j ACCEPT
-sudo iptables -P OUTPUT ACCEPT
-sudo iptables -P INPUT DROP
+sudo iptables -A OUTPUT -p tcp -j ACCEPT
+sudo iptables -A INPUT -p tcp -j DROP
 sudo bash -c "iptables-save > /etc/sysconfig/iptables"
 
 ### Turn off and disable service, spawning nc

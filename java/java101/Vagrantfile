@@ -1,0 +1,12 @@
+Vagrant.configure("2") do |config|
+
+  config.vm.define "java" do |node|
+    node.vm.box = "sbeliakou/centos"
+    node.vm.hostname = "kazak-java"
+    node.vm.network "private_network", ip: "192.168.56.25"
+    node.vm.provider "virtualbox" do |vb|
+      vb.memory = "2048"
+    end
+    node.vm.provision "shell", path: "provision.sh", privileged: false
+  end
+end

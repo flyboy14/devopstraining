@@ -1,0 +1,14 @@
+[
+   {
+      "name":"Alex",
+      "surname":"Richi",
+      "age":27,
+      "department":"Java"
+   },
+   {
+      "name":"Nick",
+      "surname":"Jones",
+      "age":25,
+      "department":"DevOps"
+   }
+]
