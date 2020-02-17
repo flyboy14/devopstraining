@@ -1,9 +1,7 @@
+# Revise variables.tf for vars
+
 provider "google" {
-
 	credentials = "${file("vm-creating-codelab.json")}"
-
-	project = "vm-creating-codelab"
-
-	region = "us-central1"
-
+	project = "${var.Project}"
+	region = "${var.Region}"
 }
